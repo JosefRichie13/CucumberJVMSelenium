@@ -37,7 +37,7 @@ public class Steps_Login {
                 driverMethods.typeText(configs.validUser, selectors.userName);
                 driverMethods.typeText(configs.wrongPassword, selectors.password);
             }
-            default -> System.out.println("Incorrect User Type");
+            default -> throw new IllegalArgumentException("Incorrect User Type : " + userType);
         }
         driverMethods.clickButton(selectors.loginButton);
     }
@@ -53,7 +53,7 @@ public class Steps_Login {
                 assertEquals(driverMethods.getTextFromElement(selectors.loginpageTitle), message);
                 assertTrue(driverMethods.elementVisibleOrNot(selectors.loginButton));
             }
-            default -> System.out.println("Incorrect Page");
+            default -> throw new IllegalArgumentException("Incorrect Page : " + page);
         }
     }
 
