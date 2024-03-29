@@ -23,6 +23,20 @@ public class Steps_Login {
                 driver.typeText(configs.validUser, selectors.userName);
                 driver.typeText(configs.password, selectors.password);
             }
+            case "locked" -> {
+                driver.typeText(configs.lockedUser, selectors.userName);
+                driver.typeText(configs.password, selectors.password);
+            }
+            case "no_username" -> driver.typeText(configs.password, selectors.password);
+            case "no_password" -> driver.typeText(configs.validUser, selectors.userName);
+            case "wrong_username" -> {
+                driver.typeText(configs.wrongUser, selectors.userName);
+                driver.typeText(configs.password, selectors.password);
+            }
+            case "wrong_password" -> {
+                driver.typeText(configs.validUser, selectors.userName);
+                driver.typeText(configs.wrongPassword, selectors.password);
+            }
             default -> System.out.println("Incorrect User Type");
         }
         driver.clickButton(selectors.loginButton);
@@ -36,11 +50,23 @@ public class Steps_Login {
                 assertFalse(driver.elementVisibleOrNot(selectors.loginButton));
             }
             case "loginpage" -> {
-
-
+                assertEquals(driver.getTextFromElement(selectors.loginpageTitle), message);
+                assertTrue(driver.elementVisibleOrNot(selectors.loginButton));
             }
             default -> System.out.println("Incorrect Page");
         }
+    }
+
+    @Then("I should see the login error message {string}")
+    public void shouldSeeTheLoginErrorMessage(String message){
+        assertTrue(driver.getTextFromElement(selectors.errorMessage).contains(message));
+    }
+
+    @When("I logout of the webpage")
+    public void iLogoutOfTheWebpage() throws InterruptedException {
+        driver.clickButton(selectors.menu);
+        Thread.sleep(5000);
+        driver.clickButton(selectors.logoutButton);
     }
 
 }

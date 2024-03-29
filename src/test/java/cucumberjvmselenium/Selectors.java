@@ -8,12 +8,10 @@ public class Selectors {
     By password = By.id("password");
     By loginButton = By.id("login-button");
     By homepageTitle = By.className("app_logo");
-
-//    static LoginButton = "login-button"
-//    static HomePageTitle = "app_logo"
-//    static ErrorMessage = ".error-message-container.error h3"
-//    static Menu = "react-burger-menu-btn"
-//    static LogoutButton = "logout_sidebar_link"
+    By errorMessage = By.cssSelector(".error-message-container.error h3");
+    By loginpageTitle = By.className("login_logo");
+    By menu = By.id("react-burger-menu-btn");
+    By logoutButton = By.id("logout_sidebar_link");
 //    static LoginPageTitle = "login_logo"
 //    static ProductList = "inventory_item_name"
 //    static AddToCart = "button[data-test]"
