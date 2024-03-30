@@ -12,16 +12,19 @@ public class Selectors {
     By loginpageTitle = By.className("login_logo");
     By menu = By.id("react-burger-menu-btn");
     By logoutButton = By.id("logout_sidebar_link");
-//    static LoginPageTitle = "login_logo"
-//    static ProductList = "inventory_item_name"
-//    static AddToCart = "button[data-test]"
-//    static Cart = "shopping_cart_link"
-//    static Checkout = "checkout"
-//    static FirstName = "first-name"
-//    static LastName = "last-name"
-//    static ZipCode = "postal-code"
-//    static ContinueButton = "continue"
-//    static FinishButton = "finish"
-//    static CheckoutBanner = "complete-header"
+    By productBackpack = By.cssSelector("button[name*=sauce-labs-backpack]");
+    By productBikelight = By.cssSelector("button[name*=sauce-labs-bike-light]");
+    By productTshirt = By.cssSelector("button[name*=sauce-labs-bolt-t-shirt]");
+    By productJacket = By.cssSelector("button[name*=sauce-labs-fleece-jacket]");
+    By productOnesie = By.cssSelector("button[name*=sauce-labs-onesie]");
+    By productTshirtRed = By.cssSelector("button[name*=allthethings]");
+    By cart = By.className("shopping_cart_link");
+    By checkout = By.id("checkout");
+    By firstName = By.id("first-name");
+    By lastName = By.id("last-name");
+    By zipCode = By.id("postal-code");
+    By continueButton = By.id("continue");
+    By finishButton = By.id("finish");
+    By checkoutBanner = By.className("complete-header");
 
 }
