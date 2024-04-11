@@ -5,6 +5,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en_old.Tha;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
 
 public class Steps_ProductCheckout {
@@ -61,5 +65,41 @@ public class Steps_ProductCheckout {
     @Then("I should see {string} after the order is placed")
     public void seeMessageAfterOrderPlacement(String message){
         assertEquals(driverMethods.getTextFromElement(selectors.checkoutBanner), message);
+    }
+
+    /* We get the Tax shown in the UI, extract the number, convert it into float and store it in a variable, taxCalculatedByAPP
+       We get the non taxed sum shown in the UI, extract the number, convert into float, multiple it by 0.08 (8%), round the result off to 2 and store it in a variable, taxCalculatedByCODE
+       Then we check if both taxCalculatedByAPP and taxCalculatedByCODE are equal
+
+       We get the total shown in the UI, extract the number, convert it into float and store it in a variable, totalCalculatedByAPP
+       We get the non tax added total shown in the UI, extract the number, convert into float, add the tax calculated (taxCalculatedByCODE) and store it in a variable, totalCalculatedByCODE
+       Then we check if both totalCalculatedByAPP and totalCalculatedByCODE are equal
+    */
+    @Then("I should see the tax calculated at 8 percent")
+    public void verifyTheTaxCalculation(){
+        float taxCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.taxCalculated).replaceAll("[^\\d.]", ""));
+        float taxCalculatedByCODE = Math.round(Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", "")) * 0.08 * 100f) / 100f;
+        assertEquals(taxCalculatedByAPP, taxCalculatedByCODE, 0);
+
+        float totalCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.fullTotal).replaceAll("[^\\d.]", ""));
+        float totalCalculatedByCODE = Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", "")) + taxCalculatedByAPP;
+        assertEquals(totalCalculatedByAPP, totalCalculatedByCODE, 0);
+    }
+
+    /*
+    We get the individual prices into an array, individualPrices
+    We remove the $ sign, convert the array elements into float and sum it. Storing it in a variable, sumCalculatedByCODE
+    We get the total displayed in the UI, extract the number, convert into float and store it in a variable, sumCalculatedByAPP
+    Then we check if sumCalculatedByCODE and sumCalculatedByAPP are equal
+    */
+    @Then("I should see the individual items total correctly")
+    public void verifyIndividualItemsTotal(){
+        List<String> individualPrices = driverMethods.getAllTextFromAListOfElements(selectors.priceList);
+        List<String> individualPricesInFloatWithoutSign = individualPrices.stream().map(s -> s.substring(1)).collect(Collectors.toList());
+        float sumCalculatedByCODE = individualPricesInFloatWithoutSign.stream().map(Float::valueOf).reduce(0f, Float::sum);
+
+        float sumCalculatedByAPP = Float.parseFloat(driverMethods.getTextFromElement(selectors.subtotal).replaceAll("[^\\d.]", ""));
+
+        assertEquals(sumCalculatedByCODE, sumCalculatedByAPP, 0);
     }
 }

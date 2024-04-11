@@ -26,5 +26,16 @@ public class Selectors {
     By continueButton = By.id("continue");
     By finishButton = By.id("finish");
     By checkoutBanner = By.className("complete-header");
+    By taxCalculated = By.className("summary_tax_label");
+    By subtotal = By.className("summary_subtotal_label");
+    By fullTotal = By.cssSelector("div[class*=summary_total_label]");
+    By priceList = By.className("inventory_item_price");
+    By itemNumberInCart = By.className("shopping_cart_badge");
+    By productSort = By.className("product_sort_container");
+    By productList = By.className("inventory_item_name");
+    By footer = By.className("footer");
+    By footerTwitter = By.cssSelector(".social_twitter a");
+    By footerFacebook = By.cssSelector(".social_facebook a");
+    By footerLinkedin = By.cssSelector(".social_linkedin a");
 
 }

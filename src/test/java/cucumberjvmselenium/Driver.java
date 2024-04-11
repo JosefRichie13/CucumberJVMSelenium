@@ -1,6 +1,11 @@
 package cucumberjvmselenium;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Driver {
 
@@ -33,7 +38,19 @@ public class Driver {
         return Hooks.driver.findElement(element).getText();
     }
 
-    public String getTextFromAListOfElements(By element, int index){
+    public String getSpecificTextFromAListOfElements(By element, int index){
         return Hooks.driver.findElements(element).get(index).getText();
+    }
+
+    public List<String> getAllTextFromAListOfElements(By element) {
+        List<WebElement> elements = Hooks.driver.findElements(element);
+        return elements.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+
+    public void selectFromDropdownUsingText(By element, String selectOptionInText){
+        WebElement elementToSelect = Hooks.driver.findElement(element);
+        Select select = new Select(elementToSelect);
+        select.selectByVisibleText(selectOptionInText);
     }
 }
