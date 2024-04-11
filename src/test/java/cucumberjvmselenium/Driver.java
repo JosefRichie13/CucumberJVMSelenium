@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Driver {
@@ -47,10 +49,19 @@ public class Driver {
         return elements.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
-
     public void selectFromDropdownUsingText(By element, String selectOptionInText){
         WebElement elementToSelect = Hooks.driver.findElement(element);
         Select select = new Select(elementToSelect);
         select.selectByVisibleText(selectOptionInText);
+    }
+
+    public String getTheCurrentURL(){
+        return Hooks.driver.getCurrentUrl();
+    }
+
+    public void switchBetweenTabs(Integer tabNumber){
+        Set<String> setOfHandleIDS = Hooks.driver.getWindowHandles();
+        List<String> listOfHandleIDS = new ArrayList<>(setOfHandleIDS);
+        Hooks.driver.switchTo().window(listOfHandleIDS.get(tabNumber));
     }
 }
